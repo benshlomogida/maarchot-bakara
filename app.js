@@ -568,12 +568,13 @@ let toastT; function toast(t) { const el = $('#toast'); el.textContent = t; el.h
 /* ---------- reader open/close ---------- */
 function openReader() {
   if (reader.hidden) {
-    reader.hidden = false; $('#cover-screen').hidden = true; applyPrefs(); layout(); toggleChrome(false);
+    reader.hidden = false; $('#cover-screen').hidden = true; $('#brand').classList.add('small'); $('#brand').setAttribute('aria-label', 'סגירת הספר'); applyPrefs(); layout(); toggleChrome(false);
   }
 }
-function closeReader() { reader.hidden = true; const cs = $('#cover-screen'); cs.hidden = false; cs.classList.remove('opening'); cs.classList.add('enter'); hideSel(); renderCover(); }
-$('#r-close').innerHTML = icon('x'); $('#r-mark').innerHTML = icon('mark'); $('#r-menu').innerHTML = icon('menu');
-$('#r-close').onclick = closeReader; $('#r-menu').onclick = openMenu;
+function closeReader() { reader.hidden = true; $('#brand').classList.remove('small'); $('#brand').setAttribute('aria-label', 'מערך הבקרה ופיקוח טיסה'); const cs = $('#cover-screen'); cs.hidden = false; cs.classList.remove('opening'); cs.classList.add('enter'); hideSel(); renderCover(); }
+$('#r-mark').innerHTML = icon('mark'); $('#r-menu').innerHTML = icon('menu');
+$('#brand').onclick = () => { if (!reader.hidden) closeReader(); };
+$('#r-menu').onclick = openMenu;
 $('#r-mark').onclick = () => {
   const a = anchorNow(); if (!a.id) return;
   const on = S.marks.filter(m => { const el = flow.querySelector(`[data-b="${m.id}"]`); return el && pageOf(el) <= page && lastPageOf(el) >= page; });
@@ -593,8 +594,7 @@ if (document.fonts) {
 function renderCover() {
   const pct = Math.round(S.progress * 100), a = S.anchor && byId[S.anchor], sec = a && a.k !== 'front' ? sectionOf(a) : null;
   const el = $('#cover-screen');
-  el.innerHTML = `<div class="mark"><img src="logo.svg" alt="">מערך הבקרה ופיקוח טיסה</div>
-    <button class="mode-btn" id="c-mode" aria-label="${isDark() ? 'מעבר למראה בהיר' : 'מעבר למראה כהה'}">${icon(isDark() ? 'sun' : 'moon')}</button>
+  el.innerHTML = `<button class="mode-btn" id="c-mode" aria-label="${isDark() ? 'מעבר למראה בהיר' : 'מעבר למראה כהה'}">${icon(isDark() ? 'sun' : 'moon')}</button>
     <div class="book" id="c-book"><div class="book-inner" id="c-cover"><img class="cover" src="cover.jpg" alt="כריכת הספר מערכות בקרה"></div></div>
     <div class="cover-info"><h1>מערכות בקרה</h1><p>ד״ר רפי יהל, זאב בהיר</p>
       ${S.started ? `<div class="progress"><i style="width:${pct}%"></i></div><p style="font-size:13px">${pct}%${sec ? ' · ' + esc(sec.t) : ''}</p>` : ''}
