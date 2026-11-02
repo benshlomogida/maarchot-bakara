@@ -84,7 +84,7 @@ function frontHtml() {
   const toRows = toc.map(t => `<a class="${t.lv === 1 ? 'l1' : 'l2'}" data-toc="${t.id}"><span>${t.lv === 1 && t.l ? t.l + ' · ' : ''}${esc(t.t)}</span><i>${t.page}</i></a>`).join('');
   const locked = CHAPTERS.map(c => `<span class="lk l1" data-lock="1"><span>${c[0] ? c[0] + ' · ' : ''}${esc(c[1])}</span><i>${c[2]}</i></span>`).join('');
   byId.front1 = { k: 'front', page: 3 }; byId.front2 = { k: 'front', page: 4 };
-  return `<section class="bk-front" data-b="front1"><img src="logo.svg" alt="סמל מערך הבקרה"><h1>מערכות בקרה</h1><p class="auth">ד״ר רפי יהל, זאב בהיר</p><p class="sub">מערכות מחשוב ובקרה</p>
+  return `<section class="bk-front" data-b="front1"><img src="logo.svg" alt="סמל מערך הבקרה ופיקוח טיסה"><h1>מערכות בקרה</h1><p class="auth">ד״ר רפי יהל, זאב בהיר</p><p class="sub">מערכות מחשוב ובקרה</p>
     <dl><dt>קריאה והערות</dt><dd>צבי אזיה, ישראל זילברשטיין, שמעון זיסק, אבי כהן, אבי לופו, שלום קאופמן ז״ל, משה קלרטג</dd>
     <dt>ייעוץ דידקטי</dt><dd>יעקב שינבוים, ד״ר דוד ברלה</dd><dt>עריכה לשונית</dt><dd>תלמה מוקדי</dd><dt>הפקה</dt><dd>אביבה אבידן</dd><dt>איורים</dt><dd>אירית אשר, בתיה חלף</dd><dt>עיצוב עטיפה</dt><dd>ירמי לז׳ה</dd></dl>
     <p class="legal">מהדורת ניסוי, תשס״ו – 2006. כל הזכויות שמורות למשרד החינוך, התרבות והספורט. בית ההוצאה לאור של המרכז לטכנולוגיה חינוכית.<br>הדמיה: פתח דבר ופרק 1.</p></section>
@@ -423,7 +423,7 @@ const head = t => `<div class="sh-head"><h3>${t}</h3><button class="sh-x" aria-l
 function openMenu() {
   const m = $('#popmenu');
   if (!m.hidden) { hidePop(); return; }
-  m.innerHTML = [['toc', 'תוכן עניינים', 'menu'], ['search', 'חיפוש בספר', 'search'], ['themes', 'נושאים והגדרות', null], ['scan', 'העמוד המקורי בספר', 'copy']]
+  m.innerHTML = [['toc', 'תוכן עניינים', 'menu'], ['search', 'חיפוש בספר', 'search'], ['themes', 'תצוגה', null], ['scan', 'העמוד המקורי בספר', 'copy']]
     .map(([k, t, ic]) => `<button data-m="${k}"><span>${t}</span>${ic ? icon(ic) : '<b style="font:700 19px \'Frank Ruhl Libre\',serif">Aa</b>'}</button>`).join('');
   m.hidden = false;
   m.onclick = e => {
@@ -432,7 +432,7 @@ function openMenu() {
   };
 }
 function openThemes() {
-  const sh = openSheet(head('נושאים והגדרות') + `<div class="sh-body">
+  const sh = openSheet(head('תצוגה') + `<div class="sh-body">
     <div class="seg" style="margin-bottom:10px"><button data-mode-set="light" aria-pressed="${!isDark()}">בהיר</button><button data-mode-set="dark" aria-pressed="${isDark()}">כהה</button></div>
     <div class="size-row"><button id="t-dn" aria-label="הקטנה" style="font-size:16px">א</button><i></i><button id="t-up" aria-label="הגדלה" style="font-size:25px">א</button></div>
     <div class="themes">${Object.entries(THEMES).map(([k, [n, bg, fg]]) => `<button class="theme-c" data-t="${k}" aria-pressed="${S.theme === k}" style="background:${bg};color:${fg}"><b ${k === 'bold' ? 'style="font-weight:900"' : ''}>אב</b><span>${n}</span></button>`).join('')}</div>
@@ -590,7 +590,7 @@ if (document.fonts) {
 function renderCover() {
   const pct = Math.round(S.progress * 100), a = S.anchor && byId[S.anchor], sec = a && a.k !== 'front' ? sectionOf(a) : null;
   const el = $('#cover-screen');
-  el.innerHTML = `<div class="mark"><img src="logo.svg" alt="">מערך הבקרה</div>
+  el.innerHTML = `<div class="mark"><img src="logo.svg" alt="">מערך הבקרה ופיקוח טיסה</div>
     <button class="mode-btn" id="c-mode" aria-label="${isDark() ? 'מעבר למראה בהיר' : 'מעבר למראה כהה'}">${icon(isDark() ? 'sun' : 'moon')}</button>
     <img class="cover" id="c-cover" src="cover.jpg" alt="כריכת הספר מערכות בקרה">
     <div class="cover-info"><h1>מערכות בקרה</h1><p>ד״ר רפי יהל, זאב בהיר</p>
