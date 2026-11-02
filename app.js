@@ -22,7 +22,7 @@ const icon = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${I[n]}
 const COLORS = { yellow: '#F1B12B', green: '#2BB985', blue: '#66CCFF', pink: '#F87B5C' };
 const THEMES = {
   original: ['מקורי', '#fff', '#001540'], paper: ['פלדה', '#F7F7F7', '#001540'], calm: ['צהוב', '#FFF1CD', '#001540'],
-  bold: ['מודגש', '#fff', '#001540'], focus: ['מערך', '#1C2956', '#8FD6FF'], quiet: ['לילה', '#000000', '#D4D4D4'],
+  bold: ['מודגש', '#fff', '#001540'], focus: ['מערך', '#001540', '#66CCFF'], quiet: ['לילה', '#000000', '#D4D4D4'],
 };
 const FONTS = {
   david: ['דוד', '"David Libre",serif'], frank: ['פרנק-רוהל', '"Frank Ruhl Libre",serif'],
@@ -125,7 +125,7 @@ function applyMode() {
   document.documentElement.dataset.mode = isDark() ? 'dark' : 'light';
   document.documentElement.toggleAttribute('data-night', S.theme === 'quiet');
   document.documentElement.toggleAttribute('data-yellow', S.theme === 'calm');
-  document.querySelector('meta[name=theme-color]').content = S.theme === 'quiet' ? '#000000' : S.theme === 'calm' ? '#FFF1CD' : isDark() ? '#1C2956' : '#ffffff';
+  document.querySelector('meta[name=theme-color]').content = S.theme === 'quiet' ? '#000000' : S.theme === 'calm' ? '#FFF1CD' : isDark() ? '#001540' : '#ffffff';
 }
 function applyPrefs() {
   reader.dataset.theme = S.theme; applyMode();

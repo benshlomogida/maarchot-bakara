@@ -65,7 +65,7 @@ mark.s{background:rgba(102,204,255,.35);color:inherit;border-radius:2px}
 #reader{-webkit-user-select:none;user-select:none;position:absolute;inset:0;z-index:20;background:var(--pbg);color:var(--ptx);--mx:28px;--top:calc(var(--sat) + 40px);--bottom:calc(var(--sab) + 30px);overflow:hidden;
   animation:rise .34s cubic-bezier(.2,.8,.2,1)}
 @keyframes rise{from{transform:translateY(24px) scale(.97);opacity:0}}
-#reader[data-theme=focus]{--pbg:#1C2956;--ptx:#DDE5F0;--phead:#8FD6FF;--pdim:#AEB9C9;--card2:#26365F;--glass:rgba(38,54,95,.84);--glass-line:rgba(255,255,255,.14);--accent:#8FD6FF;--red:#F86C5D;--ok:#2BB985}
+#reader[data-theme=focus]{--pbg:#001540;--ptx:#DDE5F0;--phead:#66CCFF;--pdim:#AEB9C9;--card2:#012868;--glass:rgba(1,40,104,.84);--glass-line:rgba(255,255,255,.14);--accent:#66CCFF;--red:#F86C5D;--ok:#2BB985}
 #reader[data-theme=quiet]{--pbg:#000;--ptx:#D4D4D4;--phead:#EDEDED;--pdim:#8E8E8E;--card2:#141414;--glass:rgba(28,28,28,.86);--glass-line:rgba(255,255,255,.12);--accent:#66CCFF;--red:#F86C5D;--ok:#2BB985}
 #reader[data-theme=original]{--pbg:#fff;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#F7F7F7;--glass:rgba(255,255,255,.82);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
 #reader[data-theme=bold]{--pbg:#fff;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#F7F7F7;--glass:rgba(255,255,255,.82);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
@@ -230,9 +230,9 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 .mode-btn{position:absolute;top:calc(var(--sat) + 12px);left:12px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--navy-900)}
 .mode-btn:hover{background:rgba(120,120,128,.14)}
 :root[data-mode=dark]{
-  --bg:#1C2956;--card:#26365F;--ink:#fff;--ink2:#AEB9C9;--ink3:var(--steel-500);--line:rgba(174,185,201,.24);
-  --accent:#8FD6FF;--on-accent:var(--navy-900);--tint:rgba(102,204,255,.16);--red:var(--red-400);--ok:#2BB985;
-  --glass:rgba(38,54,95,.82);--glass-line:rgba(255,255,255,.14);
+  --bg:var(--navy-900);--card:var(--navy-800);--ink:#fff;--ink2:#AEB9C9;--ink3:var(--steel-500);--line:rgba(174,185,201,.24);
+  --accent:var(--sky-300);--on-accent:var(--navy-900);--tint:rgba(102,204,255,.16);--red:var(--red-400);--ok:#2BB985;
+  --glass:rgba(1,40,104,.84);--glass-line:rgba(255,255,255,.14);
 }
 [data-mode=dark] #cover-screen,[data-mode=dark] #splash{background:var(--bg);color:#fff}
 [data-mode=dark] .splash-name{color:#fff}
