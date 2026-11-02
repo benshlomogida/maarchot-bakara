@@ -21,8 +21,8 @@ const I = {
 const icon = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
 const COLORS = { yellow: '#F1B12B', green: '#2BB985', blue: '#66CCFF', pink: '#F87B5C' };
 const THEMES = {
-  original: ['מקורי', '#fff', '#001540'], paper: ['פלדה', '#F7F7F7', '#001540'], calm: ['שמיים', '#EFF9FD', '#001540'],
-  bold: ['מודגש', '#fff', '#001540'], focus: ['מערך', '#001540', '#66CCFF'], quiet: ['לילה', '#020B24', '#DBDBDB'],
+  original: ['מקורי', '#fff', '#001540'], paper: ['פלדה', '#F7F7F7', '#001540'], calm: ['צהוב', '#FFF1CD', '#001540'],
+  bold: ['מודגש', '#fff', '#001540'], focus: ['מערך', '#1C2956', '#8FD6FF'], quiet: ['לילה', '#0A0C12', '#C9CED6'],
 };
 const FONTS = {
   david: ['דוד', '"David Libre",serif'], frank: ['פרנק-רוהל', '"Frank Ruhl Libre",serif'],
@@ -67,7 +67,7 @@ function blockHtml(b) {
     case 'note': src[b.id] = xrefs(b.h); return `<div class="bk-note" data-b="${b.id}" data-t>${src[b.id]}</div>`;
     case 'li': src[b.id] = xrefs(b.h); return `<div class="bk-li" data-b="${b.id}" data-t>${src[b.id]}</div>`;
     case 'p': src[b.id] = xrefs(b.h); return `<p data-b="${b.id}" data-t>${src[b.id]}</p>`;
-    case 'eq': return `<div class="bk-eq" data-b="${b.id}"><img src="${b.src}" alt="משוואה" style="width:${Math.round(b.w * .92)}px;aspect-ratio:${b.w}/${b.h}"></div>`;
+    case 'eq': return `<div class="bk-eq" data-b="${b.id}"><img src="${b.src}" alt="משוואה" style="width:${(b.w / 11).toFixed(2)}em;aspect-ratio:${b.w}/${b.h}"></div>`;
     case 'fig': {
       const pct = Math.min(100, Math.round(b.w / 370 * 108));
       return `<figure class="bk-fig" data-b="${b.id}"><button data-zoom="${b.id}" aria-label="הגדלת איור" style="width:${pct}%"><img src="${b.src}" alt="${esc(strip(b.cap || 'איור'))}" style="width:100%;aspect-ratio:${b.w}/${b.h}"></button>${b.cap ? `<figcaption>${b.cap}</figcaption>` : ''}</figure>`;
@@ -123,7 +123,8 @@ function lastPageOf(el) { const rs = el.getClientRects(); const r = rs.length ? 
 const isDark = () => ['focus', 'quiet'].includes(S.theme);
 function applyMode() {
   document.documentElement.dataset.mode = isDark() ? 'dark' : 'light';
-  document.querySelector('meta[name=theme-color]').content = isDark() ? '#001540' : '#ffffff';
+  document.documentElement.toggleAttribute('data-night', S.theme === 'quiet');
+  document.querySelector('meta[name=theme-color]').content = S.theme === 'quiet' ? '#0A0C12' : isDark() ? '#1C2956' : '#ffffff';
 }
 function applyPrefs() {
   reader.dataset.theme = S.theme; applyMode();
@@ -529,8 +530,8 @@ function openFigure(b, sheet) {
     $('#f-go', sh).onclick = () => goBlock(b.id);
     return;
   }
-  const lb = $('#lightbox'); lb.hidden = false; lb.className = '';
-  lb.innerHTML = `<div class="lb-top"><span>${b.cap ? esc(strip(b.cap)) : 'איור'}</span><button class="round" id="lb-x" aria-label="סגירה">${icon('x')}</button></div><div class="lb-img"><img src="${b.src}" alt=""></div><div class="lb-bot" style="justify-content:center"><span style="color:#6c6c70">לחיצה על האיור מגדילה אותו</span></div>`;
+  const lb = $('#lightbox'); lb.hidden = false; lb.className = 'lb-fig';
+  lb.innerHTML = `<div class="lb-top"><span>${b.cap ? esc(strip(b.cap)) : 'איור'}</span><button class="round" id="lb-x" aria-label="סגירה">${icon('x')}</button></div><div class="lb-img"><img src="${b.src}" alt=""></div><div class="lb-bot" style="justify-content:center"><span class="lb-note">לחיצה על האיור מגדילה אותו</span></div>`;
   $('#lb-x', lb).onclick = () => { lb.hidden = true; };
   $('img', lb).onclick = () => lb.classList.toggle('zoom');
 }
@@ -568,7 +569,7 @@ function openReader() {
     reader.hidden = false; $('#cover-screen').hidden = true; applyPrefs(); layout(); toggleChrome(false);
   }
 }
-function closeReader() { reader.hidden = true; $('#cover-screen').hidden = false; hideSel(); renderCover(); }
+function closeReader() { reader.hidden = true; const cs = $('#cover-screen'); cs.hidden = false; cs.classList.remove('opening'); cs.classList.add('enter'); hideSel(); renderCover(); }
 $('#r-close').innerHTML = icon('x'); $('#r-mark').innerHTML = icon('mark'); $('#r-menu').innerHTML = icon('menu');
 $('#r-close').onclick = closeReader; $('#r-menu').onclick = openMenu;
 $('#r-mark').onclick = () => {
@@ -592,16 +593,44 @@ function renderCover() {
   const el = $('#cover-screen');
   el.innerHTML = `<div class="mark"><img src="logo.svg" alt="">מערך הבקרה ופיקוח טיסה</div>
     <button class="mode-btn" id="c-mode" aria-label="${isDark() ? 'מעבר למראה בהיר' : 'מעבר למראה כהה'}">${icon(isDark() ? 'sun' : 'moon')}</button>
-    <img class="cover" id="c-cover" src="cover.jpg" alt="כריכת הספר מערכות בקרה">
+    <div class="book" id="c-book"><div class="book-inner" id="c-cover"><img class="cover" src="cover.jpg" alt="כריכת הספר מערכות בקרה"></div></div>
     <div class="cover-info"><h1>מערכות בקרה</h1><p>ד״ר רפי יהל, זאב בהיר</p>
       ${S.started ? `<div class="progress"><i style="width:${pct}%"></i></div><p style="font-size:13px">${pct}%${sec ? ' · ' + esc(sec.t) : ''}</p>` : ''}
       <button class="cta" id="c-go">${S.started ? 'המשך קריאה' : 'פתיחת הספר'}</button>
       <button class="cta2" id="c-toc">תוכן העניינים</button></div>`;
-  $('#c-cover').onclick = $('#c-go').onclick = openReader;
+  $('#c-cover').onclick = $('#c-go').onclick = openBook;
   $('#c-mode').onclick = () => { S.theme = isDark() ? 'original' : 'focus'; save(); applyPrefs(); renderCover(); };
   $('#c-toc').onclick = () => { openReader(); toggleChrome(true); openToc('toc'); };
 }
 applyMode();
 renderCover();
-if (S.started) openReader();
+
+/* The closed book tilts toward the pointer */
+const cs = $('#cover-screen');
+cs.addEventListener('pointermove', e => {
+  if (e.pointerType === 'touch' || cs.classList.contains('opening')) return;
+  const r = cs.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+  cs.style.setProperty('--ry', (-9 + x * 18).toFixed(1) + 'deg');
+  cs.style.setProperty('--rx', (-y * 10).toFixed(1) + 'deg');
+  cs.style.setProperty('--sh', (x * 40).toFixed(1) + 'deg');
+});
+function openBook() {
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) { openReader(); return; }
+  cs.getBoundingClientRect();
+  openReader();
+  cs.hidden = false; cs.classList.remove('enter'); cs.classList.add('opening');
+  setTimeout(() => { cs.hidden = true; cs.classList.remove('opening'); }, 950);
+}
+
+/* Entrance. A returning reader lands back on their page; everyone can tap to skip */
+const splash = $('#splash');
+let splashDone = false;
+function endSplash() {
+  if (splashDone) return; splashDone = true;
+  splash.classList.add('out');
+  if (S.started) openReader(); else cs.classList.add('enter');
+  setTimeout(() => { splash.hidden = true; }, 650);
+}
+splash.addEventListener('click', endSplash);
+setTimeout(endSplash, matchMedia('(prefers-reduced-motion:reduce)').matches ? 300 : 1700);
 })();

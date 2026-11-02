@@ -23,7 +23,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block}
 
 /* Closed book */
-#cover-screen{position:absolute;inset:0;overflow-y:auto;background:#fff;color:var(--navy-900);
+#cover-screen{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#fff;color:var(--navy-900);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:calc(var(--sat) + 74px) 24px calc(var(--sab) + 28px);text-align:center}
 .mark{position:absolute;top:calc(var(--sat) + 18px);right:20px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--navy-900)}
 .mark img{width:32px;height:32px;display:block}
@@ -58,12 +58,12 @@ mark.s{background:rgba(102,204,255,.35);color:inherit;border-radius:2px}
 #reader{-webkit-user-select:none;user-select:none;position:absolute;inset:0;z-index:20;background:var(--pbg);color:var(--ptx);--mx:28px;--top:calc(var(--sat) + 30px);--bottom:calc(var(--sab) + 30px);overflow:hidden;
   animation:rise .34s cubic-bezier(.2,.8,.2,1)}
 @keyframes rise{from{transform:translateY(24px) scale(.97);opacity:0}}
-#reader[data-theme=focus]{--pbg:#001540;--ptx:#EDEDED;--phead:#66CCFF;--pdim:#C4C4C4;--card2:#012868;--glass:rgba(1,40,104,.82);--glass-line:rgba(255,255,255,.14);--accent:#66CCFF;--red:#F86C5D;--ok:#2BB985}
-#reader[data-theme=quiet]{--pbg:#020B24;--ptx:#DBDBDB;--phead:#66CCFF;--pdim:#ACACAC;--card2:#001540;--glass:rgba(0,21,64,.84);--glass-line:rgba(255,255,255,.14);--accent:#66CCFF;--red:#F86C5D;--ok:#2BB985}
+#reader[data-theme=focus]{--pbg:#1C2956;--ptx:#DDE5F0;--phead:#8FD6FF;--pdim:#AEB9C9;--card2:#26365F;--glass:rgba(38,54,95,.84);--glass-line:rgba(255,255,255,.14);--accent:#8FD6FF;--red:#F86C5D;--ok:#2BB985}
+#reader[data-theme=quiet]{--pbg:#0A0C12;--ptx:#C9CED6;--phead:#C9CED6;--pdim:#8B929E;--card2:#15181F;--glass:rgba(21,24,31,.86);--glass-line:rgba(255,255,255,.12);--accent:#66CCFF;--red:#F86C5D;--ok:#2BB985}
 #reader[data-theme=original]{--pbg:#fff;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#F7F7F7;--glass:rgba(255,255,255,.82);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
 #reader[data-theme=bold]{--pbg:#fff;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#F7F7F7;--glass:rgba(255,255,255,.82);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
 #reader[data-theme=paper]{--pbg:#F7F7F7;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#EDEDED;--glass:rgba(247,247,247,.84);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
-#reader[data-theme=calm]{--pbg:#EFF9FD;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#DBF3FF;--glass:rgba(239,249,253,.84);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
+#reader[data-theme=calm]{--pbg:#FFF1CD;--ptx:#001540;--phead:#001540;--pdim:#5D5D5D;--card2:#FBE6B4;--glass:rgba(255,241,205,.86);--glass-line:rgba(0,21,64,.1);--accent:#0759C6;--red:#CC0000;--ok:#008657}
 #pager{position:absolute;inset:0;overflow:hidden;perspective:1500px;touch-action:none;cursor:default}
 #flow,.leaf-flow{position:absolute;top:var(--top);right:0;width:100%;height:calc(100% - var(--top) - var(--bottom));padding:0 var(--mx);
   column-fill:auto;column-gap:calc(var(--mx)*2);font-family:var(--rfont,"David Libre");font-size:var(--rsize,20px);line-height:var(--rlh,1.6);
@@ -219,19 +219,17 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 .bk-toc a.l2{padding-inline-start:1em}
 .bk-toc span.lk{color:var(--pdim)}
 .bk-toc i{font-style:normal;color:var(--pdim);font-variant-numeric:tabular-nums;font-family:var(--ui)}
-#splash{position:absolute;inset:0;z-index:100;display:grid;place-items:center;background:#fff;animation:splash .35s ease .75s forwards;pointer-events:none}
-#splash img{width:112px;height:112px;animation:rise .45s cubic-bezier(.2,.8,.2,1)}
-@keyframes splash{to{opacity:0;visibility:hidden}}
 
 /* Dark appearance, chosen by the reader */
 .mode-btn{position:absolute;top:calc(var(--sat) + 12px);left:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--navy-900)}
 .mode-btn:hover{background:rgba(120,120,128,.14)}
 :root[data-mode=dark]{
-  --bg:var(--navy-900);--card:var(--navy-800);--ink:#fff;--ink2:var(--steel-300);--ink3:var(--steel-500);--line:rgba(196,196,196,.22);
-  --accent:var(--sky-300);--on-accent:var(--navy-900);--tint:rgba(102,204,255,.16);--red:var(--red-400);--ok:#2BB985;
-  --glass:rgba(1,40,104,.78);--glass-line:rgba(255,255,255,.14);
+  --bg:#1C2956;--card:#26365F;--ink:#fff;--ink2:#AEB9C9;--ink3:var(--steel-500);--line:rgba(174,185,201,.24);
+  --accent:#8FD6FF;--on-accent:var(--navy-900);--tint:rgba(102,204,255,.16);--red:var(--red-400);--ok:#2BB985;
+  --glass:rgba(38,54,95,.82);--glass-line:rgba(255,255,255,.14);
 }
-[data-mode=dark] #cover-screen,[data-mode=dark] #splash{background:linear-gradient(135deg,var(--navy-950),var(--navy-700));color:#fff}
+[data-mode=dark] #cover-screen,[data-mode=dark] #splash{background:var(--bg);color:#fff}
+[data-mode=dark] .splash-name{color:#fff}
 [data-mode=dark] .mark{color:var(--steel-200)}
 [data-mode=dark] .mode-btn{color:#fff}
 [data-mode=dark] .cover{box-shadow:0 22px 50px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.35)}
@@ -244,3 +242,51 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 [data-mode=dark] #scrim{background:rgba(2,11,36,.55)}
 [data-mode=dark] .toggle[aria-pressed=true]{background:var(--sky-300)}
 [data-mode=dark] .theme-c[aria-pressed=true]{box-shadow:0 0 0 2.5px var(--sky-300)}
+
+/* Figures blend into whichever surface holds them: the group is isolated so the blend sees that surface, not transparency */
+#reader{--surface:var(--pbg)}
+.bk-q{--surface:var(--card2)}
+.bk-fig,.bk-eq{background:var(--surface);isolation:isolate}
+/* The near-black page theme carries through the whole app */
+:root[data-night]{--bg:#0A0C12;--card:#15181F;--glass:rgba(21,24,31,.86);--accent:#66CCFF}
+/* Dark figure surfaces outside the reader */
+[data-mode=dark] .sh-fig{background:var(--card);isolation:isolate}
+[data-mode=dark] .sh-fig img{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}
+[data-mode=dark] #lightbox{background:var(--bg);color:#fff}
+#lightbox .lb-img{background:inherit;isolation:isolate}
+[data-mode=dark] #lightbox.lb-fig img,[data-mode=dark] #lightbox.lb-fig.zoom img{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}
+#lightbox .lb-note{color:var(--ink2)}
+
+/* ---------- Entrance: the logo on a clean surface ---------- */
+#splash{position:absolute;inset:0;z-index:100;display:grid;place-items:center;background:#fff;overflow:hidden;transition:opacity .4s ease;cursor:pointer}
+#splash.out{opacity:0;pointer-events:none}
+.splash-core{position:relative;display:grid;justify-items:center;gap:18px;text-align:center;padding:0 24px}
+.splash-core img{width:clamp(104px,22vmin,148px);height:auto;display:block;animation:logoIn .8s cubic-bezier(.2,.9,.25,1) both}
+.splash-name{font-size:clamp(16px,2.4vmin,20px);font-weight:600;color:var(--navy-900);animation:riseIn .6s ease .45s both}
+@keyframes logoIn{from{opacity:0;transform:scale(.86)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}}
+
+/* ---------- The book ---------- */
+.book{position:relative;perspective:1300px;flex:none}
+.book-inner{position:relative;display:block;transform-style:preserve-3d;transform-origin:right center;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,-9deg));transition:transform .25s ease-out;cursor:pointer;border-radius:5px 3px 3px 5px}
+.book-inner .cover{box-shadow:-1px 0 0 #fbfbfb,-2px 1px 0 #dcdcdc,-3px 1px 0 #fbfbfb,-4px 2px 0 #d4d4d4,-5px 2px 0 #f5f5f5,-6px 3px 0 #cfcfcf,-22px 26px 46px rgba(0,21,64,.3),-4px 6px 12px rgba(0,21,64,.2)}
+.book-inner::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(calc(105deg + var(--sh,0deg)),rgba(255,255,255,.34),rgba(255,255,255,0) 42%,rgba(0,0,0,.08));box-shadow:inset -6px 0 8px -5px rgba(0,0,0,.35)}
+#cover-screen.enter .book-inner{animation:bookIn 1s cubic-bezier(.2,.9,.25,1) both}
+#cover-screen.enter .mark,#cover-screen.enter .mode-btn{animation:fadeIn .6s ease .45s both}
+#cover-screen.enter .cover-info>*{animation:riseIn .55s ease both}
+#cover-screen.enter .cover-info>*:nth-child(1){animation-delay:.3s}
+#cover-screen.enter .cover-info>*:nth-child(2){animation-delay:.38s}
+#cover-screen.enter .cover-info>*:nth-child(3){animation-delay:.46s}
+#cover-screen.enter .cover-info>*:nth-child(4){animation-delay:.54s}
+#cover-screen.enter .cover-info>*:nth-child(5){animation-delay:.62s}
+#cover-screen.enter .cover-info>*:nth-child(6){animation-delay:.7s}
+@keyframes bookIn{from{opacity:0;transform:translateY(46px) rotateY(-46deg) rotateX(10deg) scale(.86)}}
+@keyframes fadeIn{from{opacity:0}}
+.cta{position:relative;overflow:hidden;transition:transform .15s}
+.cta:active,.cta2:active{transform:scale(.98)}
+/* Opening: the cover swings on its spine on the right and the page is underneath */
+#cover-screen.opening{z-index:30;background:transparent!important;transition:background .5s;pointer-events:none}
+#cover-screen.opening .mark,#cover-screen.opening .mode-btn,#cover-screen.opening .cover-info{transition:opacity .22s;opacity:0}
+#cover-screen.opening .book{transition:transform .85s cubic-bezier(.45,.05,.2,1);transform:scale(1.5)}
+#cover-screen.opening .book-inner{animation:none;transition:transform .85s cubic-bezier(.45,.05,.2,1),opacity .25s linear .62s;transform:rotateY(128deg);opacity:0}
+@media (prefers-reduced-motion:reduce){.book-inner{transform:none}}
