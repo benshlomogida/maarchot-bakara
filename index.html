@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex,nofollow">
+<title>מערכות בקרה</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="phone">
+  <div id="splash" aria-hidden="true"><img src="logo.svg" alt=""></div>
+  <main id="cover-screen"></main>
+
+  <section id="reader" hidden data-theme="original">
+    <div id="pager"><div id="flow"></div></div>
+    <div id="gutter"></div>
+    <div id="runhead"></div>
+    <div id="runfoot"></div>
+    <div id="chrome">
+      <button class="glass round" id="r-close" aria-label="סגירה"></button>
+      <button class="glass round" id="r-mark" aria-label="סימנייה"></button>
+      <div id="scrub" class="glass">
+        <input id="scrubber" type="range" min="0" value="0" aria-label="מעבר לעמוד">
+        <div id="scrub-label"></div>
+      </div>
+      <button class="glass round" id="r-menu" aria-label="תפריט"></button>
+    </div>
+    <div id="popmenu" class="glass" hidden></div>
+    <div id="selbar" class="glass" hidden></div>
+  </section>
+
+  <div id="scrim" hidden></div>
+  <div id="sheet" hidden></div>
+  <div id="lightbox" hidden></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="book.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
