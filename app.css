@@ -23,22 +23,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block}
 
 /* Closed book */
-#cover-screen{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#fff;color:var(--navy-900);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:calc(var(--sat) + 74px) 24px calc(var(--sab) + 28px);text-align:center}
-.mark{position:absolute;top:calc(var(--sat) + 18px);right:20px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--navy-900)}
-.mark img{width:32px;height:32px;display:block}
-.cover{display:block;width:min(58vw,250px,calc((100dvh - 330px)*.686));aspect-ratio:2007/2928;height:auto;border-radius:5px 3px 3px 5px;box-shadow:0 18px 40px rgba(0,21,64,.26),0 2px 6px rgba(0,21,64,.18);cursor:pointer;object-fit:cover}
-.cover-info{margin-top:22px;width:100%;max-width:340px}
+#cover-screen{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#fff;color:var(--navy-900);text-align:center;
+  display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"mark" "book" "info";justify-items:center;align-content:center;row-gap:clamp(12px,2.6dvh,28px);
+  padding:calc(var(--sat) + 14px) 24px calc(var(--sab) + 14px)}
+#cover-screen.pre{visibility:hidden}
+.mark{grid-area:mark;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:13px;font-weight:600;line-height:1.25;color:var(--navy-900)}
+.mark img{width:46px;height:46px;display:block}
+.book{grid-area:book}
+.cover{display:block;width:min(60vw,280px,max(120px,calc((100vh - 340px)*.686)));width:min(60vw,280px,max(120px,calc((100dvh - 340px)*.686)));aspect-ratio:2007/2928;height:auto;border-radius:5px 3px 3px 5px;box-shadow:0 18px 40px rgba(0,21,64,.26),0 2px 6px rgba(0,21,64,.18);cursor:pointer;object-fit:cover}
+.cover-info{grid-area:info;width:100%;max-width:340px}
 .cover-info h1{font-size:27px;font-weight:700;margin:0 0 4px;color:var(--navy-900)}
 .cover-info p{margin:0;color:var(--steel-700);font-size:14.5px}
 .progress{height:4px;border-radius:2px;background:rgba(0,21,64,.12);overflow:hidden;margin:16px 0 6px}
 .progress i{display:block;height:100%;background:var(--navy-600);border-radius:2px}
 .cta{display:block;width:100%;margin-top:16px;height:50px;border-radius:25px;background:var(--navy-900);color:#fff;font-weight:600;font-size:17px}
 .cta2{display:block;width:100%;margin-top:8px;height:44px;border-radius:22px;color:var(--navy-900);font-weight:600;font-size:15.5px;box-shadow:inset 0 0 0 1px rgba(0,21,64,.3)}
-@media (min-width:760px) and (min-aspect-ratio:1/1){
-  #cover-screen{flex-direction:row;gap:56px}
-  .cover{width:min(300px,calc((100dvh - 150px)*.686))}
-  .cover-info{margin:0;text-align:start;max-width:360px}
+/* Wide or landscape: book on the right, name and actions beside it */
+@media (min-aspect-ratio:1/1){
+  #cover-screen{grid-template-columns:auto minmax(0,360px);grid-template-rows:auto auto;grid-template-areas:"book mark" "book info";justify-content:center;column-gap:clamp(28px,6vw,72px);row-gap:clamp(8px,2.4dvh,22px)}
+  .mark{align-self:end}
+  .cover-info{align-self:start;text-align:center}
+  .book{align-self:center}
+  .cover{width:min(300px,calc((100vh - 48px)*.686));width:min(300px,calc((100dvh - 48px)*.686))}
+}
+@media (min-aspect-ratio:1/1) and (max-height:430px){
+  .mark img{width:32px;height:32px}
+  .cover-info h1{font-size:21px}
+  .cta{margin-top:10px;height:42px}
+  .cta2{margin-top:6px;height:38px}
 }
 .list{background:var(--card);border-radius:16px;overflow:hidden}
 .row{display:flex;gap:12px;align-items:center;width:100%;padding:13px 16px;text-align:start;position:relative;font-size:16px;min-height:48px}
@@ -232,7 +244,6 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 [data-mode=dark] .splash-name{color:#fff}
 [data-mode=dark] .mark{color:var(--steel-200)}
 [data-mode=dark] .mode-btn{color:#fff}
-[data-mode=dark] .cover{box-shadow:0 22px 50px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.35)}
 [data-mode=dark] .cover-info h1{color:var(--sky-300)}
 [data-mode=dark] .cover-info p{color:var(--steel-200)}
 [data-mode=dark] .progress{background:rgba(255,255,255,.2)}
@@ -258,7 +269,7 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 #lightbox .lb-note{color:var(--ink2)}
 
 /* ---------- Entrance: the logo on a clean surface ---------- */
-#splash{position:absolute;inset:0;z-index:100;display:grid;place-items:center;background:#fff;overflow:hidden;transition:opacity .4s ease;cursor:pointer}
+#splash{position:absolute;inset:0;z-index:100;transform:translateZ(0);display:grid;place-items:center;background:#fff;overflow:hidden;transition:opacity .4s ease;cursor:pointer}
 #splash.out{opacity:0;pointer-events:none}
 .splash-core{position:relative;display:grid;justify-items:center;gap:18px;text-align:center;padding:0 24px}
 .splash-core img{width:clamp(104px,22vmin,148px);height:auto;display:block;animation:logoIn .8s cubic-bezier(.2,.9,.25,1) both}

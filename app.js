@@ -130,7 +130,7 @@ function applyMode() {
 function applyPrefs() {
   reader.dataset.theme = S.theme; applyMode();
   const st = flow.style, f = FONTS[S.font][1];
-  reader.style.setProperty('--rfont', f); reader.style.setProperty('--rsize', S.size + 'px'); reader.style.setProperty('--rlh', S.lh);
+  reader.style.setProperty('--rfont', f); reader.style.setProperty('--rlh', S.lh);
   flow.classList.toggle('justify', S.justify);
 }
 function anchorNow() {
@@ -155,9 +155,10 @@ function layout() {
   W = pager.clientWidth; if (!W) return;
   const H = pager.clientHeight;
   // Two-page spread once a landscape window has room for two comfortable columns
-  const spread = W >= 960 && W / H > 1.15;
+  const spread = (W >= 960 && W / H > 1.15) || (W >= 640 && W / H > 1.5);
   reader.classList.toggle('spread', spread);
-  const mx = spread ? Math.max(44, Math.round((W - 2 * 520) / 4)) : W >= 700 ? Math.round((W - 620) / 2) : W < 360 ? 20 : 28;
+  reader.style.setProperty('--rsize', Math.round(S.size * (W < 360 ? .9 : 1)) + 'px');
+  const mx = spread ? (W < 960 ? 26 : Math.max(44, Math.round((W - 2 * 520) / 4))) : W >= 700 ? Math.round((W - 620) / 2) : W < 360 ? 20 : 28;
   reader.style.setProperty('--mx', mx + 'px');
   flow.style.columnWidth = (spread ? (W - 4 * mx) / 2 : W - 2 * mx) + 'px';
   flow.style.columnCount = spread ? 2 : 'auto';
@@ -605,6 +606,7 @@ function renderCover() {
 }
 applyMode();
 renderCover();
+$('#cover-screen').classList.add('pre');
 
 /* The closed book tilts toward the pointer */
 const cs = $('#cover-screen');
@@ -629,6 +631,7 @@ let splashDone = false;
 function endSplash() {
   if (splashDone) return; splashDone = true;
   splash.classList.add('out');
+  cs.classList.remove('pre');
   if (S.started) openReader(); else cs.classList.add('enter');
   setTimeout(() => { splash.hidden = true; }, 650);
 }
