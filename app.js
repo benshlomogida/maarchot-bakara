@@ -124,7 +124,8 @@ const isDark = () => ['focus', 'quiet'].includes(S.theme);
 function applyMode() {
   document.documentElement.dataset.mode = isDark() ? 'dark' : 'light';
   document.documentElement.toggleAttribute('data-night', S.theme === 'quiet');
-  document.querySelector('meta[name=theme-color]').content = S.theme === 'quiet' ? '#000000' : isDark() ? '#1C2956' : '#ffffff';
+  document.documentElement.toggleAttribute('data-yellow', S.theme === 'calm');
+  document.querySelector('meta[name=theme-color]').content = S.theme === 'quiet' ? '#000000' : S.theme === 'calm' ? '#FFF1CD' : isDark() ? '#1C2956' : '#ffffff';
 }
 function applyPrefs() {
   reader.dataset.theme = S.theme; applyMode();
@@ -434,7 +435,7 @@ function openMenu() {
 }
 function openThemes() {
   const sh = openSheet(head('תצוגה') + `<div class="sh-body">
-    <div class="seg" style="margin-bottom:10px"><button data-mode-set="light" aria-pressed="${!isDark()}">בהיר</button><button data-mode-set="dark" aria-pressed="${isDark()}">כהה</button></div>
+    <div class="seg" style="margin-bottom:10px"><button data-mode-set="light" aria-pressed="${!isDark() && S.theme !== 'calm'}">בהיר</button><button data-mode-set="yellow" aria-pressed="${S.theme === 'calm'}">צהוב</button><button data-mode-set="dark" aria-pressed="${isDark()}">כהה</button></div>
     <div class="size-row"><button id="t-dn" aria-label="הקטנה" style="font-size:16px">א</button><i></i><button id="t-up" aria-label="הגדלה" style="font-size:25px">א</button></div>
     <div class="themes">${Object.entries(THEMES).map(([k, [n, bg, fg]]) => `<button class="theme-c" data-t="${k}" aria-pressed="${S.theme === k}" style="background:${bg};color:${fg}"><b ${k === 'bold' ? 'style="font-weight:900"' : ''}>אב</b><span>${n}</span></button>`).join('')}</div>
     <div class="list">
@@ -446,7 +447,7 @@ function openThemes() {
     <div class="seg">${[['slide', 'החלקה'], ['flip', 'דף מתהפך'], ['fade', 'עמעום']].map(([k, n]) => `<button data-turn="${k}" aria-pressed="${S.turn === k}">${n}</button>`).join('')}</div>
   </div>`);
   const refresh = () => { applyPrefs(); layout(); save(); };
-  sh.querySelectorAll('[data-mode-set]').forEach(b => b.onclick = () => { const dark = b.dataset.modeSet === 'dark'; if (dark !== isDark()) { S.theme = dark ? 'focus' : 'original'; refresh(); openThemes(); } });
+  sh.querySelectorAll('[data-mode-set]').forEach(b => b.onclick = () => { S.theme = { light: 'original', yellow: 'calm', dark: 'focus' }[b.dataset.modeSet]; refresh(); openThemes(); });
   $('#t-dn', sh).onclick = () => { S.size = Math.max(15, S.size - 1); refresh(); };
   $('#t-up', sh).onclick = () => { S.size = Math.min(30, S.size + 1); refresh(); };
   sh.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { S.theme = b.dataset.t; sh.querySelectorAll('[data-t]').forEach(x => x.setAttribute('aria-pressed', x === b)); refresh(); openThemes(); });

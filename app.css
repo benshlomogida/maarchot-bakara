@@ -290,3 +290,7 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 #cover-screen.opening .book{transition:transform .85s cubic-bezier(.45,.05,.2,1);transform:scale(1.5)}
 #cover-screen.opening .book-inner{animation:none;transition:transform .85s cubic-bezier(.45,.05,.2,1),opacity .25s linear .62s;transform:rotateY(128deg);opacity:0}
 @media (prefers-reduced-motion:reduce){.book-inner{transform:none}}
+
+/* The yellow page carries through the closed book and the settings */
+:root[data-yellow]{--bg:#FFF8E6;--glass:rgba(255,241,205,.86)}
+[data-yellow] #cover-screen,[data-yellow] #splash{background:#FFF1CD}
