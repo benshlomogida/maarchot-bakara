@@ -25,10 +25,10 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 /* Closed book */
 #cover-screen{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#fff;color:var(--navy-900);text-align:center;
   display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"book" "info";justify-items:center;align-content:center;row-gap:clamp(12px,2.6dvh,28px);
-  padding:calc(var(--sat) + 84px) 24px calc(var(--sab) + 14px)}
+  padding:calc(var(--sat) + 68px) 24px calc(var(--sab) + 14px)}
 #cover-screen.pre{visibility:hidden}
 .book{grid-area:book}
-.cover{display:block;width:min(60vw,280px,max(120px,calc((100vh - 310px)*.686)));width:min(60vw,280px,max(120px,calc((100dvh - 310px)*.686)));aspect-ratio:2007/2928;height:auto;border-radius:5px 3px 3px 5px;box-shadow:0 18px 40px rgba(0,21,64,.26),0 2px 6px rgba(0,21,64,.18);cursor:pointer;object-fit:cover}
+.cover{display:block;width:min(60vw,280px,max(120px,calc((100vh - 296px)*.686)));width:min(60vw,280px,max(120px,calc((100dvh - 296px)*.686)));aspect-ratio:2007/2928;height:auto;border-radius:5px 3px 3px 5px;box-shadow:0 18px 40px rgba(0,21,64,.26),0 2px 6px rgba(0,21,64,.18);cursor:pointer;object-fit:cover}
 .cover-info{grid-area:info;width:100%;max-width:340px}
 .cover-info h1{font-size:27px;font-weight:700;margin:0 0 4px;color:var(--navy-900)}
 .cover-info p{margin:0;color:var(--steel-700);font-size:14.5px}
@@ -242,7 +242,7 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 [data-mode=dark] .cover-info p{color:var(--steel-200)}
 [data-mode=dark] .progress{background:rgba(255,255,255,.2)}
 [data-mode=dark] .progress i{background:var(--sky-300)}
-[data-mode=dark] .cta{background:var(--red-600)}
+[data-mode=dark] .cta{background:var(--sky-300);color:var(--navy-900)}
 [data-mode=dark] .cta2{color:var(--sky-300);box-shadow:inset 0 0 0 1px rgba(102,204,255,.5)}
 [data-mode=dark] #scrim{background:rgba(2,11,36,.55)}
 [data-mode=dark] .toggle[aria-pressed=true]{background:var(--sky-300)}
@@ -301,9 +301,9 @@ mark.find{background:rgba(102,204,255,.5);color:inherit;border-radius:2px}
 [data-yellow] #cover-screen,[data-yellow] #splash{background:#FFF1CD}
 
 /* The logo stays in the top-right corner on every screen; its name shows only with the closed book */
-#brand{position:absolute;z-index:35;top:calc(var(--sat) + 12px);right:16px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none;color:var(--navy-900);direction:rtl}
+#brand{position:absolute;z-index:35;top:calc(var(--sat) + 12px);right:16px;display:flex;flex-direction:row;align-items:center;gap:9px;pointer-events:none;color:var(--navy-900);direction:rtl}
 #brand img{width:44px;height:44px;display:block;transition:width .25s,height .25s}
-#brand span{font-size:12px;font-weight:600;line-height:1.25;max-width:150px;text-align:right}
+#brand span{font-size:13px;font-weight:600;line-height:1.25;white-space:nowrap;text-align:right}
 #brand.small{top:calc(var(--sat) + 2px);right:8px;padding:5px;border-radius:50%;pointer-events:auto;cursor:pointer}
 #brand:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #brand.small img{width:30px;height:30px}
